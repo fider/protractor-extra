@@ -1,41 +1,55 @@
-# Whole repository is template for new Node.js TypeScript module. Download it and adapt to your needs.
-
 - [About](#about)
 - [Installation & requirements](#installation-and-requirements)
 - [Examples](#examples)
-  - [First](#first-example)
-  - [Second](#second-example)
+  - [Classic protractor](#classic-protractor)
+  - [With protractor-extra](#with-protractor-extra)
 - [Documentation](#documentation)
 
 # About
-npm scripts in package.json requires bash command line
-
-This module provides... TODO
+Helpers for protractor and augmentations for protractor ElementFinder.
+Work in progress so not yet documented well.
 
 # Installation and requirements
-Requires [Node.js](https://nodejs.org/) vX.X.X TODO
+Requires [Node.js](https://nodejs.org/) >= v6
+Requires [TypeScript](https://www.npmjs.com/package/typescript) >= v3
+Requires [TypeScript](https://www.npmjs.com/package/protractor) >= v5  (tested only with v5.4.2)
 ```sh
-$ npm install TODO-MODULE-NAME
+$ npm i -S protractor-extra
 ```
 
 # Examples
 
-## First example
+## Classic protractor
+
 ```js
-// js code
+  import { element, by, ExpectedConditions, browser } from "protractor";
+
+  const userBtn = element( by.css('#user-btn') );
+
+  async function doSomething() {
+    let timeoutMs = config.clickbaleTimeout;
+    await browser.wait(EC.elementToBeClickable(userBtn), timeoutMs, `Element  "${userBtn.locator()}"  not clickable in ${timeoutMs/1000}s.`);
+    await userBtn.click();
+  }
 ```
 
-## Second example
+## With protractor-extra
 ```js
-// js code
+  const { elementByCss } = require("protractor-extra"); // to guarantee sync import
+  import { element, by } from "protractor";
+
+  // `default` or any other milliseconds number value may be used
+  const userBtn = elementByCss( '#user-btn',  {waitClickableBeforeClick: 'default'}  );
+
+  async function doSomething() {
+    await userBtn.click();
+  }
 ```
 
 # Documentation
+TODO when v 1.0.0 released
 
 ## `module`
 - ### `Class` description
   - #### `Class:method` description
 - ### `Function` description
-
-
-![image](https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png)

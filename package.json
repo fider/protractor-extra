@@ -1,7 +1,7 @@
 {
-  "name": "TODO-REPO-NAME",
-  "version": "1.0.0",
-  "description": "TODO-REPO-DESCRIPTION",
+  "name": "protractor-extra",
+  "version": "0.0.1",
+  "description": "Agumentations for objects exported from protractor (TypeScript v.3+ only)",
   "main": "./lib/index.js",
   "scripts": {
     "build": "tsc  &&  npm run lint",
@@ -14,13 +14,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "TODO-GIT-REPO-GIT+FORMAT"
+    "url": "https://github.com/fider/protractor-extra.git"
   },
   "keywords": [
-    "TODO-NPMJS-KEYWORD"
+    "protractor",
+    "extra",
+    "augmentation"
   ],
-  "author": "TODO-AUTHOR",
-  "license": "TODO-LICENSE",
+  "author": "Wojciech Fiderek <w.fiderek@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "protractor": "*"
+  },
   "devDependencies": {
     "@types/jest": "24.0.15",
     "@types/node": "10.10.1",
@@ -32,7 +37,7 @@
     "typescript": "3.4.5"
   },
   "bugs": {
-    "url": "TODO-GIT-REPO-GIT+FORMAT/issues"
+    "url": "https://github.com/fider/protractor-extra/issues"
   },
-  "homepage": "TODO-GIT-REPO-GIT+FORMAT#readme"
+  "homepage": "https://github.com/fider/protractor-extra#readme"
 }
