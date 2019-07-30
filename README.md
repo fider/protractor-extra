@@ -28,7 +28,8 @@ $ npm i -S protractor-extra
 
   async function doSomething() {
     let timeoutMs = config.clickbaleTimeout;
-    await browser.wait(EC.elementToBeClickable(userBtn), timeoutMs, `Element  "${userBtn.locator()}"  not clickable in ${timeoutMs/1000}s.`);
+    let failMessage = `Element  "${userBtn.locator()}"  not clickable in ${timeoutMs/1000}s.`;
+    await browser.wait(ExpectedConditions.elementToBeClickable(userBtn), timeoutMs, failMessage);
     await userBtn.click();
   }
 ```
