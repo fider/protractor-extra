@@ -260,7 +260,7 @@ export async function waitClickable(theElement: ElementFinder, timeoutMs: number
 export async function waitPresent(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.present) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.presenceOf(theElement), timeoutMs, `Expected element "${theElement.locator}" to be present in DOM in less than ${ft(timeoutMs)}.`);
+    await browser.wait(EC.presenceOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be present in DOM in less than ${ft(timeoutMs)}.`);
 }
 
 
@@ -271,7 +271,7 @@ export async function waitPresent(theElement: ElementFinder, timeoutMs: number |
 export async function waitStale(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.stale) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.stalenessOf(theElement), timeoutMs, `Expected element "${theElement.locator}" to be removed from DOM (stale) in less than ${ft(timeoutMs)}.`);
+    await browser.wait(EC.stalenessOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be removed from DOM (stale) in less than ${ft(timeoutMs)}.`);
 }
 
 
@@ -283,7 +283,7 @@ export async function waitStale(theElement: ElementFinder, timeoutMs: number | s
 export async function waitVisible(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.visible) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.visibilityOf(theElement), timeoutMs, `Expected element "${theElement.locator}" to be visible in less than ${ft(timeoutMs)}.`);
+    await browser.wait(EC.visibilityOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be visible in less than ${ft(timeoutMs)}.`);
 }
 
 
@@ -295,7 +295,7 @@ export async function waitVisible(theElement: ElementFinder, timeoutMs: number |
 export async function waitInvisible(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.invisible) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.invisibilityOf(theElement), timeoutMs, `Expected element "${theElement.locator}" to be INvisible in less than ${ft(timeoutMs)}.`);
+    await browser.wait(EC.invisibilityOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be INvisible in less than ${ft(timeoutMs)}.`);
 }
 
 
@@ -308,5 +308,5 @@ export async function waitInvisible(theElement: ElementFinder, timeoutMs: number
 export async function waitSelected(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.selected) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.elementToBeSelected(theElement), timeoutMs, `Expected element "${theElement.locator}" to be selected in less than ${ft(timeoutMs)}.`);
+    await browser.wait(EC.elementToBeSelected(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be selected in less than ${ft(timeoutMs)}.`);
 }
