@@ -1,25 +1,35 @@
 import { ElementOptions, defaultElementOptions } from './ElementFinder-declaration';
-import { ElementFinder, Locator, element, by } from 'protractor';
+import { ElementFinder, Locator, element, by, $ } from 'protractor';
 import { _addWaitHooksToElementBasingOnElementOptions } from './ElementFinder-waitStateBeforeAction';
 
 
 
 // ---------------------------------------------------------
-//      elem()
+//      elementExtra()
 // ---------------------------------------------------------
 
+ElementFinder.prototype.x$           = elementExtra;
 ElementFinder.prototype.elementExtra = elementExtra;
 
+export const x$ = elementExtra;
 
 /**
  * Wrapper for protractor.element() with extra optional hooks.
  * @param locator
  * @param [options]
  */
-export function elementExtra(this: any, locator: Locator, options?: ElementOptions) {
+export function elementExtra(this: any, locatorOrCssSelector: string | Locator, options?: ElementOptions) {
 
     options = options || {timeouts: {}};
     Object.assign(options.timeouts, defaultElementOptions.timeouts);
+
+    let locator: Locator;
+    if (typeof locatorOrCssSelector === 'string') {
+        locator = $(locatorOrCssSelector);
+    }
+    else {
+        locator = locatorOrCssSelector;
+    }
 
     let theElement: ElementFinder;
 
@@ -40,15 +50,18 @@ export function elementExtra(this: any, locator: Locator, options?: ElementOptio
 
 
 // ---------------------------------------------------------
-//      elemByAttr()
+//      elementExtraByAttr()
 // ---------------------------------------------------------
 
-ElementFinder.prototype.elemByAttr = elemByAttr;
+ElementFinder.prototype.xA                 = elementExtraByAttr;
+ElementFinder.prototype.elementExtraByAttr = elementExtraByAttr;
+
+export const xA = elementExtraByAttr;
 
 
 let elemByAttrPrefix = '';
 
-export function setElemByAttrPrefix(prefix: string) {
+export function setElementExtraByAttrPrefix(prefix: string) {
     elemByAttrPrefix = prefix;
 }
 
@@ -65,7 +78,7 @@ const selectorAndNthChildRegExp = /([\w-]*)(\[([1-9]{1}[0-9]*)\])?/;
  *              so in fact it is looking for html attribute name.
  * @param [options]
  */
-export function elemByAttr(this: any, attributeSelector: string, options?: ElementOptions) {
+export function elementExtraByAttr(this: any, attributeSelector: string, options?: ElementOptions) {
     const cssAttributeSelector: string = attributeSelector
         .split(' ')
         .map( (subSelector) => {

@@ -20,8 +20,19 @@ declare module 'protractor' {
         // ---------------------------------------------------------
         //      private  ElementFinder::wait<STATE>Before<ACTION>()
         // ---------------------------------------------------------
-        elementExtra(subLocator: Locator, options?: ElementOptions): ElementFinder;
-        elemByAttr(attributeSelector: string, options?: ElementOptions): ElementFinder;
+
+        // Alias for elementExtra
+        x$(subLocatorOrCssSelector: string | Locator, options?: ElementOptions): ElementFinder;
+
+        // Alias for elementExtraByAttr
+        xA(attributeSelector: string, options?: ElementOptions): ElementFinder;
+
+        // Child element with Extra Options by locator or css selector string
+        elementExtra(subLocatorOrCssSelector: string | Locator, options?: ElementOptions): ElementFinder;
+
+        // Element with Extra Options by Attribute
+        elementExtraByAttr(attributeSelector: string, options?: ElementOptions): ElementFinder;
+
 
         // ---------------------------------------------------------
         //      public  ElementFinder::elemByTID()
