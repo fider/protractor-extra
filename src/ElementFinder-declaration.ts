@@ -20,7 +20,7 @@ declare module 'protractor' {
         // ---------------------------------------------------------
         //      private  ElementFinder::wait<STATE>Before<ACTION>()
         // ---------------------------------------------------------
-        elem(subLocator: Locator, options?: ElementOptions): ElementFinder;
+        elementExtra(subLocator: Locator, options?: ElementOptions): ElementFinder;
         elemByAttr(attributeSelector: string, options?: ElementOptions): ElementFinder;
 
         // ---------------------------------------------------------

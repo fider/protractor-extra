@@ -1,4 +1,4 @@
-import { ElementOptions } from './ElementFinder-declaration';
+import { ElementOptions, defaultElementOptions } from './ElementFinder-declaration';
 import { ElementFinder, Locator, element, by } from 'protractor';
 import { _addWaitHooksToElementBasingOnElementOptions } from './ElementFinder-waitStateBeforeAction';
 
@@ -8,7 +8,7 @@ import { _addWaitHooksToElementBasingOnElementOptions } from './ElementFinder-wa
 //      elem()
 // ---------------------------------------------------------
 
-ElementFinder.prototype.elem = elem;
+ElementFinder.prototype.elementExtra = elementExtra;
 
 
 /**
@@ -16,8 +16,10 @@ ElementFinder.prototype.elem = elem;
  * @param locator
  * @param [options]
  */
-export function elem(this: any, locator: Locator, options?: ElementOptions) {
+export function elementExtra(this: any, locator: Locator, options?: ElementOptions) {
 
+    options = options || {timeouts: {}};
+    Object.assign(options.timeouts, defaultElementOptions.timeouts);
 
     let theElement: ElementFinder;
 
@@ -30,7 +32,7 @@ export function elem(this: any, locator: Locator, options?: ElementOptions) {
     }
 
 
-    theElement.options = options || {timeouts: {}};
+    theElement.options = options;
     _addWaitHooksToElementBasingOnElementOptions(theElement);
     return theElement;
 }
@@ -91,10 +93,10 @@ export function elemByAttr(this: any, attributeSelector: string, options?: Eleme
 
     if (this instanceof ElementFinder) {
         // TODO inherit options from parent + override it with current options
-        theElement = this.elem(locator, options);
+        theElement = this.elementExtra(locator, options);
     }
     else {
-        theElement = elem(locator, options);
+        theElement = elementExtra(locator, options);
     }
 
 
