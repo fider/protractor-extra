@@ -1,4 +1,4 @@
-import { ElementFinder, Locator } from 'protractor';
+import { ElementFinder } from 'protractor';
 import { waitTextIs, waitTextContains, waitTextInValueIs, waitSelected, waitInvisible, waitVisible, waitStale, waitPresent, waitClickable } from './waitConditions';
 
 
