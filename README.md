@@ -1,3 +1,7 @@
+# Experimental
+Do not use until verion 1.x.x released
+
+
 - [About](#about)
 - [Installation & requirements](#installation-and-requirements)
 - [Examples](#examples)

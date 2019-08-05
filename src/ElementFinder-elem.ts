@@ -16,7 +16,7 @@ ElementFinder.prototype.elem = elem;
  * @param locator
  * @param [options]
  */
-export function elem(this: any, locator: string | Locator, options?: ElementOptions) {
+export function elem(this: any, locator: Locator, options?: ElementOptions) {
 
 
     let theElement: ElementFinder;
