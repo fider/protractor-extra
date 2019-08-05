@@ -2,6 +2,8 @@
 *
 # Except
 !lib/*
+
+# Ignore map and test files
 lib/*.js.map
 lib/*.test.js
 lib/*.test.js.map
