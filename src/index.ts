@@ -1,6 +1,7 @@
+import './ElementFinderExtra';
 import './ElementFinder-waitState';
 
-export * from './ElementFinder-declaration';
-export * from './ElementFinder-elem';
-export * from './waitConditions';
+export * from './elementExtra';
+export * from './wait-conditions';
 export * from './expect';
+export * from './helpers';

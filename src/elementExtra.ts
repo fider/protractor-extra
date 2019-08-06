@@ -1,27 +1,30 @@
-import { ElementOptions, defaultElementOptions } from './ElementFinder-declaration';
+import { ElementOptions } from './ElementFinderExtra';
 import { ElementFinder, Locator, element, by, $ } from 'protractor';
-import { _addWaitHooksToElementBasingOnElementOptions } from './ElementFinder-waitStateBeforeAction';
+import { _addWaitHooksToElementBasingOnElementOptions } from './internal-pre-action-hooks';
+import { normalizeElementOptions } from './internal-helpers';
+const mergeOptions = require('merge-options');
 
+
+let userDefinedDefaultExtraOptions: ElementOptions = {timeouts: {}};
+
+
+export function setDefaultElementOptions(options: ElementOptions) {
+    userDefinedDefaultExtraOptions = mergeOptions(userDefinedDefaultExtraOptions, options);
+}
 
 
 // ---------------------------------------------------------
 //      elementExtra()
 // ---------------------------------------------------------
 
-ElementFinder.prototype.x$           = elementExtra;
-ElementFinder.prototype.elementExtra = elementExtra;
-
-export const x$ = elementExtra;
 
 /**
  * Wrapper for protractor.element() with extra optional hooks.
  * @param locator
  * @param [options]
  */
-export function elementExtra(this: any, locatorOrCssSelector: string | Locator, options?: ElementOptions) {
+export function x$(this: void | ElementFinder, locatorOrCssSelector: string | Locator, options?: ElementOptions) {
 
-    options = options || {timeouts: {}};
-    Object.assign(options.timeouts, defaultElementOptions.timeouts);
 
     let locator: Locator;
     if (typeof locatorOrCssSelector === 'string') {
@@ -34,16 +37,24 @@ export function elementExtra(this: any, locatorOrCssSelector: string | Locator, 
     let theElement: ElementFinder;
 
     if (this instanceof ElementFinder) {
-        // TODO inherit options from parent + override it with current options
         theElement = this.element(locator);
+        options = mergeOptions(this.options, options);
     }
     else {
         theElement = element(locator);
     }
 
 
-    theElement.options = options;
+    // Extra additions
+    const emptyOptions: ElementOptions = {timeouts: {}};
+    const normalizedOptions = normalizeElementOptions(
+        mergeOptions(emptyOptions, userDefinedDefaultExtraOptions, options)
+    );
+    theElement.options = normalizedOptions;
+
     _addWaitHooksToElementBasingOnElementOptions(theElement);
+
+
     return theElement;
 }
 
@@ -53,21 +64,18 @@ export function elementExtra(this: any, locatorOrCssSelector: string | Locator, 
 //      elementExtraByAttr()
 // ---------------------------------------------------------
 
-ElementFinder.prototype.xA                 = elementExtraByAttr;
-ElementFinder.prototype.elementExtraByAttr = elementExtraByAttr;
-
-export const xA = elementExtraByAttr;
 
 
-let elemByAttrPrefix = '';
+let defaultXAttrPrefix = '';
 
-export function setElementExtraByAttrPrefix(prefix: string) {
-    elemByAttrPrefix = prefix;
+
+export function setXAttrPrefix(prefix: string) {
+    defaultXAttrPrefix = prefix;
 }
 
 
-const selectorAndNthChildRegExp = /([\w-]*)(\[([1-9]{1}[0-9]*)\])?/;
 
+const selectorAndNthChildRegExp = /([\w-]*)(\[([1-9]{1}[0-9]*)\])?/;
 
 /**
  * Wrapper for protractorExtra.elem(). Search by attribute name `elemByAttr('test-id-submit-btn')`
@@ -78,7 +86,39 @@ const selectorAndNthChildRegExp = /([\w-]*)(\[([1-9]{1}[0-9]*)\])?/;
  *              so in fact it is looking for html attribute name.
  * @param [options]
  */
-export function elementExtraByAttr(this: any, attributeSelector: string, options?: ElementOptions) {
+export function xAttr(this: void | ElementFinder, attributeSelector: string, options: ElementOptions = {timeouts: {}}) {
+
+    let theElementFinderExtra: ElementFinder;
+    let xAttrPrefix: string;
+
+
+    if (this instanceof ElementFinder) {
+        xAttrPrefix = options.xAttrPrefix || this.options.xAttrPrefix || '';
+        options = mergeOptions(options, this.options);
+    }
+    else {
+        xAttrPrefix = options.xAttrPrefix || defaultXAttrPrefix || '';
+    }
+
+
+    const locator = _xAttr(xAttrPrefix, attributeSelector);
+
+
+    if (this instanceof ElementFinder) {
+        theElementFinderExtra = this.x$(locator, options);
+    }
+    else {
+        theElementFinderExtra = x$(locator, options);
+    }
+
+
+    return theElementFinderExtra;
+}
+
+
+
+export function _xAttr(attrPrefix: string, attributeSelector: string) {
+
     const cssAttributeSelector: string = attributeSelector
         .split(' ')
         .map( (subSelector) => {
@@ -96,22 +136,11 @@ export function elementExtraByAttr(this: any, attributeSelector: string, options
                 throw new Error(`elemByAttr("${attributeSelector}") selector argument error. SubSelector="${subSelector}". Invalid index[] value. Expected "selectorName[index]" to contain index starting with 1.`);
             }
 
-            return `[${elemByAttrPrefix}${attrSuffix}]${nthChild}`;
+            return `[${attrPrefix}${attrSuffix}]${nthChild}`;
         })
         .join(' ');
 
     let locator: Locator = by.css(cssAttributeSelector);
 
-    let theElement: ElementFinder;
-
-    if (this instanceof ElementFinder) {
-        // TODO inherit options from parent + override it with current options
-        theElement = this.elementExtra(locator, options);
-    }
-    else {
-        theElement = elementExtra(locator, options);
-    }
-
-
-    return theElement;
+    return locator;
 }

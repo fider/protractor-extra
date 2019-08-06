@@ -1,6 +1,6 @@
 {
   "name": "protractor-extra",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Agumentations for objects exported from protractor (TypeScript v.3+ only)",
   "main": "./lib/index.js",
   "scripts": {
@@ -28,8 +28,8 @@
     "webdriver-manager": "*"
   },
   "dependencies": {
-    "deep-copy": "1.4.2",
     "escape-string-regexp": "2.0.0",
+    "merge-options": "^1.0.1",
     "ms": "2.1.2"
   },
   "devDependencies": {

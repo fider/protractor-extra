@@ -24,9 +24,9 @@ function _waitVisibleBeforeClick(theElement: ElementFinder) {
     }
 
     const legacyClick = theElement.click.bind(theElement);
-    theElement.click = async () => {
+    theElement.click = async function _waitVisibleThenClick(...args: any[]) {
         await theElement.waitVisible(timeout);
-        await legacyClick();
+        return (legacyClick as any)(...args);
     };
 }
 
@@ -39,9 +39,9 @@ function _waitClickableBeforeClick(theElement: ElementFinder) {
     }
 
     const legacyClick = theElement.click.bind(theElement);
-    theElement.click = async () => {
+    theElement.click = async function _waitClickableThenClick(...args: any[]) {
         await theElement.waitClickable(timeout);
-        await legacyClick();
+        return (legacyClick as any)(...args);
     };
 }
 
@@ -54,9 +54,9 @@ function _waitClickableBeforeClear(theElement: ElementFinder) {
     }
 
     const legacyClear = theElement.clear.bind(theElement);
-    theElement.clear = async () => {
+    theElement.clear = async function _waitClickableThenClear(...args: any[]) {
         await theElement.waitClickable(timeout);
-        await legacyClear();
+        return (legacyClear as any)(...args);
     };
 }
 
@@ -69,9 +69,9 @@ function _waitClickableBeforeSendKeys(theElement: ElementFinder) {
     }
 
     const legacySendKeys = theElement.sendKeys.bind(theElement);
-    theElement.sendKeys = async () => {
+    theElement.sendKeys = async function _waitClickableThenSendKeys(...args: any[]) {
         await theElement.waitClickable(timeout);
-        await legacySendKeys();
+        return legacySendKeys(...args);
     };
 }
 

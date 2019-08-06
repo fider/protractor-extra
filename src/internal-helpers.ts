@@ -1,5 +1,23 @@
+import { ElementOptions, ElementOptions_Normalized } from './ElementFinderExtra';
 import { ElementFinder, ExpectedConditions as EC } from 'protractor';
 import escapeStringRegexp from 'escape-string-regexp';
+const mergeOptions = require('merge-options');
+
+
+
+export function normalizeElementOptions(options: ElementOptions = {timeouts: {}}): ElementOptions_Normalized {
+
+    // deep copy
+    const normalizedOptions: ElementOptions_Normalized = mergeOptions(options);
+
+    // normalize timeout string values (convert to millis)
+    for (let [key, value] of Object.entries(options.timeouts)) {
+        (normalizedOptions.timeouts as any)[key] = timeToMs(value as any);
+    }
+
+    return normalizedOptions;
+}
+
 
 /**
  * @param text [string|RegExp]
@@ -32,7 +50,7 @@ export function ft(timeMs: number) {
         divisor = 1;
     }
 
-    return  `${timeMs / divisor}[${unit}]`;
+    return  `${timeMs / divisor}${unit}`;
 }
 
 
@@ -42,8 +60,8 @@ export function timeToMs(timeOrMsTime: number | string) {
     if (typeof timeOrMsTime === 'string') {
         timeMs = ms(timeOrMsTime);
 
-        if ( ! timeOrMsTime) {
-            throw new Error(`Invalid ElementOptions time provided ${timeOrMsTime}. Expected number or valid "ms" module time: https://www.npmjs.com/package/ms`);
+        if ( ! timeMs) {
+            throw new Error(`Invalid string time value provided "${timeOrMsTime}". Module "ms" is unable to parse it. Expected number or valid "ms" module time: https://www.npmjs.com/package/ms`);
         }
     }
     else {

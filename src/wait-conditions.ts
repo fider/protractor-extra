@@ -1,6 +1,6 @@
 import { browser, ExpectedConditions as EC, ElementFinder } from 'protractor';
 import ms = require('ms');
-import { expect } from './expect';
+import * as expectModule from './expect';
 import { textToRegExp, ft as ft, falseIfMissing, _patternToBePresentInElementAttribute, timeToMs } from './internal-helpers';
 
 
@@ -68,7 +68,7 @@ export async function waitAlertPresent(message: RegExp | string | null = null, t
     if (message) {
         message = textToRegExp(message, 'fullMatch');
         let actualText = await browser.switchTo().alert().getText();
-        expect(actualText, `waitAlertPresent(). Expected text: ${message}. Actual text: ${actualText}`).to.match(message);
+        expectModule.expect(actualText, `waitAlertPresent(). Expected text: ${message}. Actual text: ${actualText}`).to.match(message);
     }
 }
 
@@ -94,7 +94,7 @@ export async function waitTitleContains(text: string, timeoutMs: number | string
     }
 
     // TODO check built-in message and modify it if it is not clear enough
-    browser.wait( _titleContainsPattern(expectedText), timeoutMs );
+    return browser.wait( _titleContainsPattern(expectedText), timeoutMs );
 }
 
 
@@ -118,7 +118,7 @@ export async function waitTitleIs(title: string, timeoutMs: number | string = de
         };
     }
 
-    browser.wait( _titleContainsPattern(expectedTitle), timeoutMs );
+    return browser.wait( _titleContainsPattern(expectedTitle), timeoutMs );
 }
 
 
@@ -142,7 +142,7 @@ export async function waitUrlContains(url: string, timeoutMs: number | string = 
         };
     }
 
-    browser.wait( _urlContainsPattern(expectedUrl), timeoutMs );
+    return browser.wait( _urlContainsPattern(expectedUrl), timeoutMs );
 }
 
 
@@ -166,7 +166,7 @@ export async function waitUrlIs(url: string, timeoutMs: number | string = defaul
         };
     }
 
-    browser.wait( _urlContainsPattern(expectedUrl), timeoutMs );
+    return browser.wait( _urlContainsPattern(expectedUrl), timeoutMs );
 }
 
 
@@ -230,7 +230,7 @@ export async function waitTextInValueIs(theElement: ElementFinder, text: string 
 
     let expectedText = textToRegExp(text, 'fullMatch');
 
-    await browser.wait(_patternToBePresentInElementAttribute(theElement, 'value', expectedText), timeoutMs, `waitText() timeout after ${ft(timeoutMs)}. Expected elem "${theElement.locator()}" to contain text "${expectedText}". Actual text "${await theElement.getText()}"`);
+    return browser.wait(_patternToBePresentInElementAttribute(theElement, 'value', expectedText), timeoutMs, `waitText() timeout after ${ft(timeoutMs)}. Expected elem "${theElement.locator()}" to contain text "${expectedText}". Actual text "${await theElement.getText()}"`);
 }
 
 
@@ -260,7 +260,7 @@ export async function waitClickable(theElement: ElementFinder, timeoutMs: number
 export async function waitPresent(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.present) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.presenceOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be present in DOM in less than ${ft(timeoutMs)}.`);
+    return browser.wait(EC.presenceOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be present in DOM in less than ${ft(timeoutMs)}.`);
 }
 
 
@@ -271,7 +271,7 @@ export async function waitPresent(theElement: ElementFinder, timeoutMs: number |
 export async function waitStale(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.stale) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.stalenessOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be removed from DOM (stale) in less than ${ft(timeoutMs)}.`);
+    return browser.wait(EC.stalenessOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be removed from DOM (stale) in less than ${ft(timeoutMs)}.`);
 }
 
 
@@ -283,7 +283,7 @@ export async function waitStale(theElement: ElementFinder, timeoutMs: number | s
 export async function waitVisible(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.visible) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.visibilityOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be visible in less than ${ft(timeoutMs)}.`);
+    return browser.wait(EC.visibilityOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be visible in less than ${ft(timeoutMs)}.`);
 }
 
 
@@ -295,7 +295,7 @@ export async function waitVisible(theElement: ElementFinder, timeoutMs: number |
 export async function waitInvisible(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.invisible) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.invisibilityOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be INvisible in less than ${ft(timeoutMs)}.`);
+    return browser.wait(EC.invisibilityOf(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be INvisible in less than ${ft(timeoutMs)}.`);
 }
 
 
@@ -308,5 +308,5 @@ export async function waitInvisible(theElement: ElementFinder, timeoutMs: number
 export async function waitSelected(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.selected) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    await browser.wait(EC.elementToBeSelected(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be selected in less than ${ft(timeoutMs)}.`);
+    return browser.wait(EC.elementToBeSelected(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be selected in less than ${ft(timeoutMs)}.`);
 }
