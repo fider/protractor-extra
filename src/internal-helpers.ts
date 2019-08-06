@@ -4,6 +4,8 @@ import escapeStringRegexp from 'escape-string-regexp';
 const mergeOptions = require('merge-options');
 
 
+// TODO setBrowser, setExpect
+
 
 export function normalizeElementOptions(options: ElementOptions = {timeouts: {}}): ElementOptions_Normalized {
 

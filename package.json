@@ -10,7 +10,8 @@
     "clean": "rm -rf coverage lib",
     "lint": "tslint -p ./tsconfig.json",
     "prepublishOnly": "npm run build:publish  &&  npm run test",
-    "test": "jest"
+    "test": "jest",
+    "patch": "npm version patch && g ad . && g cm 'fix' && g ph && npm publish"
   },
   "repository": {
     "type": "git",

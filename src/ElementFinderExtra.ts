@@ -1,8 +1,9 @@
 import { ElementOptions } from './ElementFinderExtra';
-import { Locator, ElementFinder } from 'protractor';
+import { Locator, ElementFinder, browser } from 'protractor';
 import { waitTextIs, waitTextContains, waitTextInValueIs, waitSelected, waitInvisible, waitVisible, waitStale, waitPresent, waitClickable } from './wait-conditions';
 import { _xAttr, x$, xAttr } from './elementExtra';
 const mergeOptions = require('merge-options');
+
 
 
 // ====================================================================================================
@@ -43,14 +44,9 @@ declare module 'protractor' {
          */
         setXAttrPrefix(prefix: string): void;
 
-        // ---------------------------------------------------------
-        //      public  ElementFinder::elemByTID()
-        // ---------------------------------------------------------
-        // TODO add elemByTID
-
 
         // ---------------------------------------------------------
-        //      public  ElementFinder::wait<STATE>()
+        //      waitXXX()
         // ---------------------------------------------------------
 
         // Content/attribute check
@@ -65,6 +61,8 @@ declare module 'protractor' {
         waitVisible(timeoutMs?: number | string): Promise<void>;
         waitInvisible(timeoutMs?: number | string): Promise<void>;
         waitSelected(timeoutMs?: number | string): Promise<void>;
+
+        hover(): Promise<void>;
 
     }
 }
@@ -193,4 +191,11 @@ ElementFinder.prototype.waitInvisible = async function _waitInvisible(timeoutMs?
 ElementFinder.prototype.waitSelected = async function _waitSelected(timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitSelected;
     await waitSelected(this, timeoutMs);
+};
+
+
+
+ElementFinder.prototype.hover = async function _hover(visibleTimeout?: string | number) {
+    await this.waitVisible(visibleTimeout || this.options.timeouts.waitVisible);
+    return browser.actions().mouseMove(this).perform();
 };
