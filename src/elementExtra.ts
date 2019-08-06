@@ -1,5 +1,5 @@
 import { ElementOptions } from './ElementFinderExtra';
-import { ElementFinder, Locator, element, by, $ } from 'protractor';
+import { ElementFinder, Locator, element, by } from 'protractor';
 import { _addWaitHooksToElementBasingOnElementOptions } from './internal-pre-action-hooks';
 import { normalizeElementOptions } from './internal-helpers';
 const mergeOptions = require('merge-options');
@@ -28,7 +28,7 @@ export function x$(this: void | ElementFinder, locatorOrCssSelector: string | Lo
 
     let locator: Locator;
     if (typeof locatorOrCssSelector === 'string') {
-        locator = $(locatorOrCssSelector);
+        locator = by.css(locatorOrCssSelector);
     }
     else {
         locator = locatorOrCssSelector;
