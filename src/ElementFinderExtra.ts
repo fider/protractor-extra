@@ -2,7 +2,6 @@ import { ElementOptions } from './ElementFinderExtra';
 import { Locator, ElementFinder } from 'protractor';
 import { waitTextIs, waitTextContains, waitTextInValueIs, waitSelected, waitInvisible, waitVisible, waitStale, waitPresent, waitClickable } from './wait-conditions';
 import { _xAttr, x$, xAttr } from './elementExtra';
-import { normalizeElementOptions } from './internal-helpers';
 const mergeOptions = require('merge-options');
 
 
