@@ -1,6 +1,6 @@
 {
   "name": "protractor-extra",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "Agumentations for objects exported from protractor (TypeScript v.3+ only)",
   "main": "./lib/index.js",
   "scripts": {
