@@ -37,7 +37,7 @@ export function textToRegExp(text: string | RegExp, match: 'fullMatch' | 'partia
     return result;
 }
 
-export function ft(timeMs: number) {
+export function formatTime(timeMs: number) {
     let unit: 's' | 'ms';
     let divisor: number;
 

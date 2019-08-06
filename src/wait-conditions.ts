@@ -1,7 +1,7 @@
 import { browser, ExpectedConditions as EC, ElementFinder } from 'protractor';
 import ms = require('ms');
 import * as expectModule from './expect';
-import { textToRegExp, ft as ft, falseIfMissing, _patternToBePresentInElementAttribute, timeToMs } from './internal-helpers';
+import { textToRegExp, formatTime as ft, falseIfMissing, _patternToBePresentInElementAttribute, timeToMs } from './internal-helpers';
 
 
 
