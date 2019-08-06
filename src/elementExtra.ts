@@ -93,11 +93,11 @@ export function xAttr(this: void | ElementFinder, attributeSelector: string, opt
 
 
     if (this instanceof ElementFinder) {
-        xAttrPrefix = options.xAttrPrefix || this.options.xAttrPrefix || '';
+        xAttrPrefix = options.xAttrPrefix || this.options.xAttrPrefix || defaultXAttrPrefix;
         options = mergeOptions(options, this.options);
     }
     else {
-        xAttrPrefix = options.xAttrPrefix || defaultXAttrPrefix || '';
+        xAttrPrefix = options.xAttrPrefix || defaultXAttrPrefix;
     }
 
 
