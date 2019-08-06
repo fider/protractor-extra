@@ -62,7 +62,7 @@ declare module 'protractor' {
         waitInvisible(timeoutMs?: number | string): Promise<void>;
         waitSelected(timeoutMs?: number | string): Promise<void>;
 
-        hover(): Promise<void>;
+        hover(visibleTimeout?: string | number): Promise<void>;
 
     }
 }
