@@ -159,7 +159,7 @@ ElementFinder.prototype.waitTextInValueIs = async function _waitTextInValueIs(te
     await waitTextInValueIs(this, text, timeoutMs);
 };
 
-ElementFinder.prototype._waitHasClass = async function _waitHasClass(className: string, timeoutMs?: string | number) {
+ElementFinder.prototype.waitHasClass = async function _waitHasClass(className: string, timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitHasClass;
     await waitHasClass(this, className, timeoutMs);
 };
