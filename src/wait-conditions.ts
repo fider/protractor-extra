@@ -323,5 +323,5 @@ export async function waitSelected(theElement: ElementFinder, timeoutMs: number 
 export async function waitDisabled(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.disabled) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    return browser.wait(EC.elementToBeSelected(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be selected in less than ${ft(timeoutMs)}.`);
+    return browser.wait(EC.not(EC.elementToBeSelected(theElement)), timeoutMs, `Expected element "${theElement.locator()}" to be disabled in less than ${ft(timeoutMs)}.`);
 }
