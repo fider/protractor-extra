@@ -92,11 +92,20 @@ export function falseIfMissing(error: any) {
     }
 }
 
-export function _patternToBePresentInElementAttribute(elementFinder: ElementFinder, attribute: string, text: RegExp) {
-    let hasPatternInPropertyValue = () => {
+export function _EC_patternToBePresentInElementAttribute(elementFinder: ElementFinder, attribute: string, text: RegExp) {
+    let _hasPatternInPropertyValue = () => {
       return elementFinder.getAttribute(attribute).then((actualText: string): boolean => {
         return text.test( actualText );
       }, falseIfMissing);
     };
-    return EC.and(EC.presenceOf(elementFinder), hasPatternInPropertyValue);
+    return EC.and(EC.presenceOf(elementFinder), _hasPatternInPropertyValue);
+}
+
+export function _EC_elementHasClass(elementFinder: ElementFinder, className: string) {
+    let _hasClass = () => {
+      return elementFinder.getAttribute('class').then((classes: string): boolean => {
+        return classes.split(' ').includes(className);
+      }, falseIfMissing);
+    };
+    return EC.and(EC.presenceOf(elementFinder), _hasClass);
 }

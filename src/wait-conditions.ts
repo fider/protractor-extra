@@ -1,7 +1,7 @@
 import { browser, ExpectedConditions as EC, ElementFinder } from 'protractor';
 import ms = require('ms');
 import * as expectModule from './expect';
-import { textToRegExp, formatTime as ft, falseIfMissing, _patternToBePresentInElementAttribute, timeToMs } from './internal-helpers';
+import { textToRegExp, formatTime as ft, falseIfMissing, _EC_patternToBePresentInElementAttribute, timeToMs, _EC_elementHasClass } from './internal-helpers';
 
 
 
@@ -13,6 +13,7 @@ type WaitStateTimouts = {
     clickable?: number,
     text?: number,
     textInValue?: number,
+    hasClass?: number,
     titleContains?: number,
     titleIs?: number,
     urlContains?: number,
@@ -32,6 +33,8 @@ const defaultWaitStateTimeouts: Required<WaitStateTimouts> = {
     clickable: ms('10 s'),
     text: ms('10 s'),
     textInValue: ms('10 s'),
+    hasClass: ms('10s'),
+
     titleContains: ms('10 s'),
     titleIs: ms('10 s'),
     urlContains: ms('10 s'),
@@ -232,9 +235,15 @@ export async function waitTextInValueIs(theElement: ElementFinder, text: string 
 
     let expectedText = textToRegExp(text, 'fullMatch');
 
-    return browser.wait(_patternToBePresentInElementAttribute(theElement, 'value', expectedText), timeoutMs, `waitText() timeout after ${ft(timeoutMs)}. Expected elem "${theElement.locator()}" to contain text "${expectedText}". Actual text "${await theElement.getText()}"`);
+    return browser.wait(_EC_patternToBePresentInElementAttribute(theElement, 'value', expectedText), timeoutMs, `waitText() timeout after ${ft(timeoutMs)}. Expected elem "${theElement.locator()}" to contain text "${expectedText}". Actual text "${await theElement.getText()}"`);
 }
 
+
+export async function waitHasClass(theElement: ElementFinder, className: string, timeoutMs: number | string = defaultWaitStateTimeouts.hasClass) {
+    timeoutMs =  timeToMs(timeoutMs);
+
+    return browser.wait(_EC_elementHasClass(theElement, className), timeoutMs, `waitHasClass() timeout after ${ft(timeoutMs)}. Expected elem "${theElement.locator()}" to contain class "${className}".`);
+}
 
 
 // ---------------------------------------------------------

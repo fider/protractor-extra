@@ -1,6 +1,6 @@
 import { ElementOptions } from './ElementFinderExtra';
 import { Locator, ElementFinder, browser } from 'protractor';
-import { waitTextIs, waitTextContains, waitTextInValueIs, waitSelected, waitInvisible, waitVisible, waitStale, waitPresent, waitClickable, waitDisabled } from './wait-conditions';
+import { waitTextIs, waitTextContains, waitTextInValueIs, waitSelected, waitInvisible, waitVisible, waitStale, waitPresent, waitClickable, waitDisabled, waitHasClass } from './wait-conditions';
 import { _xAttr, x$, xAttr } from './elementExtra';
 const mergeOptions = require('merge-options');
 
@@ -93,6 +93,7 @@ type ElementTimeouts = {
     waitTextContains?:  number | string;
     waitTextIs?:        number | string;
     waitTextInValueIs?: number | string;
+    waitHasClass?:      number | string;
 
     // State check
     waitClickable?: number | string;
@@ -158,6 +159,10 @@ ElementFinder.prototype.waitTextInValueIs = async function _waitTextInValueIs(te
     await waitTextInValueIs(this, text, timeoutMs);
 };
 
+ElementFinder.prototype._waitHasClass = async function _waitHasClass(className: string, timeoutMs?: string | number) {
+    timeoutMs = timeoutMs || this.options.timeouts.waitHasClass;
+    await waitHasClass(this, className, timeoutMs);
+};
 
 
 // ---------------------------------------------------------
