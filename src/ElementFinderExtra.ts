@@ -50,17 +50,17 @@ declare module 'protractor' {
         // ---------------------------------------------------------
 
         // Content/attribute check
-        waitTextContains(  text: string | RegExp,  timeoutMs?: number | string ): Promise<void>;
-        waitTextIs(        text: string | RegExp,  timeoutMs?: number | string ): Promise<void>;
-        waitTextInValueIs(   text: string | RegExp,  timeoutMs?: number | string ): Promise<void>;
+        waitTextContains(  text: string | RegExp,  timeoutMs?: number | string ): Promise<unknown>;
+        waitTextIs(        text: string | RegExp,  timeoutMs?: number | string ): Promise<unknown>;
+        waitTextInValueIs(   text: string | RegExp,  timeoutMs?: number | string ): Promise<unknown>;
 
         // State check
-        waitClickable(timeoutMs?: number | string): Promise<void>;
-        waitPresent(timeoutMs?: number | string): Promise<void>;
-        waitStale(timeoutMs?: number | string): Promise<void>;
-        waitVisible(timeoutMs?: number | string): Promise<void>;
-        waitInvisible(timeoutMs?: number | string): Promise<void>;
-        waitSelected(timeoutMs?: number | string): Promise<void>;
+        waitClickable(timeoutMs?: number | string): Promise<unknown>;
+        waitPresent(timeoutMs?: number | string): Promise<unknown>;
+        waitStale(timeoutMs?: number | string): Promise<unknown>;
+        waitVisible(timeoutMs?: number | string): Promise<unknown>;
+        waitInvisible(timeoutMs?: number | string): Promise<unknown>;
+        waitSelected(timeoutMs?: number | string): Promise<unknown>;
 
         hover(visibleTimeout?: string | number): Promise<void>;
 
@@ -146,22 +146,22 @@ ElementFinder.prototype.setXAttrPrefix = function _setXAttrPrefix(prefix: string
 
 ElementFinder.prototype.waitTextContains = async function _waitTextContains(text: string | RegExp, timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitTextContains;
-    await waitTextContains(this, text, timeoutMs);
+    return await waitTextContains(this, text, timeoutMs);
 };
 
 ElementFinder.prototype.waitTextIs = async function _waitTextIs(text: string | RegExp, timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitTextIs;
-    await waitTextIs(this, text, timeoutMs);
+    return await waitTextIs(this, text, timeoutMs);
 };
 
 ElementFinder.prototype.waitTextInValueIs = async function _waitTextInValueIs(text: string | RegExp, timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitTextInValueIs;
-    await waitTextInValueIs(this, text, timeoutMs);
+    return await waitTextInValueIs(this, text, timeoutMs);
 };
 
 ElementFinder.prototype.waitHasClass = async function _waitHasClass(className: string, timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitHasClass;
-    await waitHasClass(this, className, timeoutMs);
+    return await waitHasClass(this, className, timeoutMs);
 };
 
 
@@ -171,40 +171,38 @@ ElementFinder.prototype.waitHasClass = async function _waitHasClass(className: s
 
 ElementFinder.prototype.waitClickable = async function _waitClickable(this: ElementFinder, timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitClickable;
-    await waitClickable(this, timeoutMs);
+    return await waitClickable(this, timeoutMs);
 };
 
 ElementFinder.prototype.waitPresent = async function _waitPresent(timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitPresent;
-    await waitPresent(this, timeoutMs);
+    return await waitPresent(this, timeoutMs);
 };
 
 ElementFinder.prototype.waitStale = async function _waitStale(timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitStale;
-    await waitStale(this, timeoutMs);
+    return await waitStale(this, timeoutMs);
 };
 
 ElementFinder.prototype.waitVisible = async function _waitVisible(timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitVisible;
-    await waitVisible(this, timeoutMs);
+    return await waitVisible(this, timeoutMs);
 };
 
 ElementFinder.prototype.waitInvisible = async function _waitInvisible(timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitInvisible;
-    await waitInvisible(this, timeoutMs);
+    return await waitInvisible(this, timeoutMs);
 };
 
 ElementFinder.prototype.waitSelected = async function _waitSelected(timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitSelected;
-    await waitSelected(this, timeoutMs);
+    return await waitSelected(this, timeoutMs);
 };
 
 ElementFinder.prototype.waitDisabled = async function _waitDisabled(timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitDisabled;
-    await waitDisabled(this, timeoutMs);
+    return await waitDisabled(this, timeoutMs);
 };
-
-
 
 ElementFinder.prototype.hover = async function _hover(visibleTimeout?: string | number) {
     await this.waitVisible(visibleTimeout || this.options.timeouts.waitVisible);
