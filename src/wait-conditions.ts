@@ -323,5 +323,12 @@ export async function waitSelected(theElement: ElementFinder, timeoutMs: number 
 export async function waitDisabled(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.disabled) {
     timeoutMs =  timeToMs(timeoutMs);
 
-    return browser.wait(EC.not(EC.elementToBeSelected(theElement)), timeoutMs, `Expected element "${theElement.locator()}" to be disabled in less than ${ft(timeoutMs)}.`);
+    // Visible but not clickable
+    const disabledCondition = EC
+        .and(
+            EC.visibilityOf(theElement),
+            EC.not( EC.elementToBeClickable(theElement) )
+        );
+
+    return browser.wait(disabledCondition, timeoutMs, `Expected element "${theElement.locator()}" to be disabled in less than ${ft(timeoutMs)}.`);
 }
