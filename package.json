@@ -11,7 +11,7 @@
     "lint": "tslint -p ./tsconfig.json",
     "prepublishOnly": "npm run build:publish  &&  npm run test",
     "test": "jest",
-    "patch": "npm version patch && g ad . && g cm 'fix' && g ph && npm publish"
+    "patch": "git add . && git commit -m \"patch update\" && git push && npm version patch && npm publish"
   },
   "repository": {
     "type": "git",

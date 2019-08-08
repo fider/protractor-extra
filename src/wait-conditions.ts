@@ -22,6 +22,7 @@ type WaitStateTimouts = {
     visible?: number,
     invisible?: number,
     selected?: number,
+    disabled?: number,
 };
 
 
@@ -40,6 +41,7 @@ const defaultWaitStateTimeouts: Required<WaitStateTimouts> = {
     visible: ms('10 s'),
     invisible: ms('10 s'),
     selected: ms('10 s'),
+    disabled: ms('10 s'),
 };
 
 
@@ -306,6 +308,19 @@ export async function waitInvisible(theElement: ElementFinder, timeoutMs: number
  * @param timeoutMs [number|string]  number or "ms" module formatted string eg. '12s'.
  */
 export async function waitSelected(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.selected) {
+    timeoutMs =  timeToMs(timeoutMs);
+
+    return browser.wait(EC.elementToBeSelected(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be selected in less than ${ft(timeoutMs)}.`);
+}
+
+
+
+/**
+ *
+ * @param theElement [ElementFinder]
+ * @param timeoutMs [number|string]  number or "ms" module formatted string eg. '12s'.
+ */
+export async function waitDisabled(theElement: ElementFinder, timeoutMs: number | string = defaultWaitStateTimeouts.disabled) {
     timeoutMs =  timeToMs(timeoutMs);
 
     return browser.wait(EC.elementToBeSelected(theElement), timeoutMs, `Expected element "${theElement.locator()}" to be selected in less than ${ft(timeoutMs)}.`);

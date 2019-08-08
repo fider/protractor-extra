@@ -1,6 +1,6 @@
 import { ElementOptions } from './ElementFinderExtra';
 import { Locator, ElementFinder, browser } from 'protractor';
-import { waitTextIs, waitTextContains, waitTextInValueIs, waitSelected, waitInvisible, waitVisible, waitStale, waitPresent, waitClickable } from './wait-conditions';
+import { waitTextIs, waitTextContains, waitTextInValueIs, waitSelected, waitInvisible, waitVisible, waitStale, waitPresent, waitClickable, waitDisabled } from './wait-conditions';
 import { _xAttr, x$, xAttr } from './elementExtra';
 const mergeOptions = require('merge-options');
 
@@ -101,6 +101,7 @@ type ElementTimeouts = {
     waitVisible?:   number | string;
     waitInvisible?: number | string;
     waitSelected?:  number | string;
+    waitDisabled?:  number | string;
 };
 
 
@@ -191,6 +192,11 @@ ElementFinder.prototype.waitInvisible = async function _waitInvisible(timeoutMs?
 ElementFinder.prototype.waitSelected = async function _waitSelected(timeoutMs?: string | number) {
     timeoutMs = timeoutMs || this.options.timeouts.waitSelected;
     await waitSelected(this, timeoutMs);
+};
+
+ElementFinder.prototype.waitDisabled = async function _waitDisabled(timeoutMs?: string | number) {
+    timeoutMs = timeoutMs || this.options.timeouts.waitDisabled;
+    await waitDisabled(this, timeoutMs);
 };
 
 
